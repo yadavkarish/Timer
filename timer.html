@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <title>Timer</title>
+    <style>
+        body
+       {
+          margin-right: auto; 
+         background: #dddddd;
+         margin: 24px;
+       }
+       #timer
+      {
+       font-family: serif;
+       display: inline-block;
+       padding: 24px 32px;
+       border-radius: 30px;
+       background: white;
+      }
+      #start
+      {
+        width: 50px;
+    height: 50px;
+    margin-left: 16px;
+    border-radius: 50%;
+    color: white;
+    background: #20f019;
+    cursor: pointer;
+      }
+      #Pause
+      {
+        width: 50px;
+    height: 50px;
+    margin-left: 16px;
+    border-radius: 50%;
+    color: white;
+    background: #fd1919;
+    cursor: pointer; 
+      }
+
+      #Resume
+      {
+        width: 50px;
+    height: 50px;
+    margin-left: 16px;
+    border-radius: 50%;
+    color: white;
+    background: #fdf919;
+    cursor: pointer; 
+      }
+      #p
+      {
+          font-size: 67px;
+          font-family:sans-serif;  
+      }
+      #timer
+      {
+          margin-top: 10%;
+      }
+
+      
+    </style>
+</head>
+<body>
+    <center><div id="timer">
+        <center><p id="p">00:00</p>
+    <input  type="text" id="input">
+    <input type="image" src="start2.png" id="start" onclick="start()"> 
+    <input type="image" id="Pause" src="stop4.png"  onclick="Pause()">
+    <input type="image" id="Resume" src="pause2.png" onclick="Resume()">
+    </div></center>
+</body>
+</html> 
+<script type="text/javascript">   
+    var time=2;
+    var tm=document.getElementById("p");
+    var totaltime=time*60*60;
+    var timerint;
+    var inputvalue=document.getElementById("input"); 
+    
+    function UpdateTimer()
+    { 
+     let hour=Math.floor((totaltime/(60*60)));   
+    let minute=Math.floor ((totaltime/60)%60);
+    let seconds=totaltime%60;
+    seconds=seconds<10? `0` +seconds: seconds; 
+    minute=minute<10?'0'+minute:minute;
+    hour=hour<10?'0'+hour:hour;
+
+    tm.innerHTML=`${hour}:${minute}:${seconds}`;
+    totaltime--; 
+    if(totaltime<0)
+    clearInterval(timerint); 
+    
+    if(hour==00 && minute==00 && seconds==00)
+    {
+     document.getElementById("timer").innerHTML="TIMES UP!";
+    }
+    }
+
+    
+    function start()
+    {
+    document.getElementById("input").disabled = true;
+    document.getElementById("start").disabled= true;
+    document.getElementById("Pause").disabled = false;
+    document.getElementById("Resume").disabled = true; 
+    timerint=setInterval (UpdateTimer, 1000);
+    if(inputvalue.value.toString().length!=0)
+     {
+        let val=parseInt(inputvalue.value);
+        totaltime=val*60;
+     }
+   }
+    
+    
+    function Pause()
+    {
+    document.getElementById("Pause").disabled = true;
+    document.getElementById("Resume").disabled = false;
+    clearInterval(timerint);
+    }
+    
+    function Resume ()
+    {
+    document.getElementById("Pause").disabled =false;
+    document.getElementById("Resume").disabled= true;
+    timerint=setInterval (UpdateTimer, 1000);
+    }
+    
+    
+    </Script>
